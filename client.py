@@ -1,6 +1,7 @@
 import socket
 import pickle
 import os
+import time
 
 HOST = '192.168.1.31'  # The server's hostname or IP address
 PORT = 65432        # The port used by the server
@@ -52,6 +53,7 @@ def brute_force_music_path() -> list:
                 music_files.append(music_serialization(c, cur))
     return music_files
 
+start_time = time.time()
 
 musicals_files = brute_force_music_path()
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -59,3 +61,4 @@ s.connect((HOST, PORT))
 s.sendall(pickle.dumps(musicals_files))
 print(len(pickle.dumps(musicals_files)))
 s.close()
+print("--- %s seconds ---" % (time.time() - start_time))
